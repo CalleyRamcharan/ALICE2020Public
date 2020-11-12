@@ -20,7 +20,7 @@ if args.printargs:
 # ------------------------------------------------------------------------
 '''
 
-
+#Function definition to read in scintillator files into a numpy array
 def readFile(fD):
     f = open(fD,'r')
     data = f.read()
@@ -34,6 +34,8 @@ def readFile(fD):
 
     return data
 
+  
+#Change run number to the run corresponding to the scintillator data you want to analyse
 run = "0783"
 
 start = 0
@@ -52,6 +54,8 @@ peakPosB2 = []
 
 timestampArr = []
 
+
+#Absolute paths used for input files - change it to your absolute path when running on your computer
 for filename in os.listdir("/Users/nathansonnina/ALICE/ALICE2020/Performance/data{0}/Channel1".format(run)):
     if(filename != ".DS_Store"):
         print(filename)
@@ -100,6 +104,7 @@ for filename in os.listdir("/Users/nathansonnina/ALICE/ALICE2020/Performance/dat
                 break
 
 
+#Absolute paths used for input files - change it to your absolute path when running on your computer
 for filename in os.listdir("/Users/nathansonnina/ALICE/ALICE2020/Performance/data{0}/Channel2".format(run)):
     if(filename != ".DS_Store"):
         pulse = readFile("/Users/nathansonnina/ALICE/ALICE2020/Performance/data{0}/Channel2/{1}".format(run, filename))
@@ -156,7 +161,7 @@ peakPosB1 = np.array(peakPosB1)
 peakPosB2 = np.array(peakPosB2)
 tdArr2 = np.abs(peakPosB1 - peakPosB2)
 
-######## Saving to csv
+######## Saving to csv file format with channel 1 and 2 integrals as well as the two methods of calculating time difference
 
 header = ['EventID', 'Timestamp', 'Sc1 Integral', 'Sc2 Integral', 'TD (Method 1)', 'TD (Method 2)']
 rows = []
