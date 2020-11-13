@@ -1,6 +1,9 @@
 import os
 import numpy as np
 
+# organises scintillator files into separate folders
+# Uses absolute paths - put in your computers necessary file paths
+
 for filename in os.listdir("C:/Users/kamee/OneDrive/Documents/alicePrac/data0793"):
     if filename.endswith("ch1.out"): 
         os.rename("C:/Users/kamee/OneDrive/Documents/alicePrac/data0793/%s" % filename, "C:/Users/kamee/OneDrive/Documents/alicePrac/data0793/Channel 1/%s" % filename)
