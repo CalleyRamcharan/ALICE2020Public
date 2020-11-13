@@ -5,7 +5,7 @@ import math
 #import adcarray as adc
 import numpy as np
 #import o32reader as rdr
-#Load specific event
+#Load specific synchronised event npy file
 data1=np.load('0783SYNC.npy')
 #data = data1[100] #changed this to take the first event
 
