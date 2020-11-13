@@ -4,6 +4,8 @@ import pylab as pl
 
 from collections import namedtuple
 
+
+#data format error catch 
 class datafmt_error(Exception):
 
     def __init__(self, text):
