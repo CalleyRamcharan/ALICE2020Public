@@ -40,6 +40,7 @@ if __name__ == "__main__":
 
     # ------------------------------------------------------------------------
     # some default settings
+    #exclude broken readout pads
     DATA_EXCLUDE_MASK = np.zeros((12, 144, 30), dtype=bool)
     DATA_EXCLUDE_MASK[4:8,0:72,:] = True
 
@@ -52,6 +53,7 @@ if __name__ == "__main__":
     scTimeArr = []
     scStrTimeArr = []
 
+    # read in channel1 scintillator data file names for timestamps
     for scEv in os.listdir("/Users/nathansonnina/ALICE/ALICE2020/Performance/data{0}/Channel1".format(args.filename)):
         if(scEv != ".DS_Store"):
             scHour = (scEv[9:11])
@@ -111,7 +113,8 @@ if __name__ == "__main__":
 
         data = analyser.data[:12]  # The last four rows are zeros.
         data[DATA_EXCLUDE_MASK] = 0
-
+        
+        # synchronising timestamps
         if(sizes[0]>500 or sizes[1]>500):
             for i in range(len(scTimeArr)):
                 if(trdTime < scTimeArr[i]+7 and trdTime > scTimeArr[i]-7):
@@ -125,6 +128,8 @@ if __name__ == "__main__":
                     scTimeArr[i] = -1 
                     validScFiles.append(scStrTimeArr[i])
 
+    # writing only synchronised scintillator data files to new directory
+    # uses absolute paths - change paths for directory for your own computer
     os.system("mkdir /Users/nathansonnina/ALICE/ALICE2020/Performance/SYNCdata{0}".format(args.filename))
     os.system("mkdir /Users/nathansonnina/ALICE/ALICE2020/Performance/SYNCdata{0}/Channel1".format(args.filename))
     os.system("mkdir /Users/nathansonnina/ALICE/ALICE2020/Performance/SYNCdata{0}/Channel2".format(args.filename))
@@ -134,6 +139,7 @@ if __name__ == "__main__":
     for j in range(len(validScFiles)):
         fileDate = "{0}_{1}".format(args.date,validScFiles[j])
         for k in range(1,3):
+            # uses absolute paths - change paths for directory for your own computer
             os.system("cp /Users/nathansonnina/ALICE/ALICE2020/Performance/data{1}/Channel{0}/{2}_ch{0}.out /Users/nathansonnina/ALICE/ALICE2020/Performance/SYNCdata{1}/Channel{0}/".format(k,args.filename,fileDate))
             
 
