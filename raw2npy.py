@@ -11,7 +11,7 @@ import argparse
 from roi import regions_of_interest
 
 
-
+#UNSYNCHRONISED NPY WRITER CLASS - for synchronisation with scintillator data use raw2npySync.py
 if __name__ == "__main__":
 
     # ------------------------------------------------------------------------
