@@ -45,10 +45,14 @@ if __name__ == "__main__":
     #print((d))
     DATA_EXCLUDE_MASK = np.zeros((12, 144), dtype=bool)
     # DATA_EXCLUDE_MASK[4:8,0:144,:] = True
+    
+    
+    #EDIT EXCLUDE MASK VALUE TO EXCLUDE WHICHEVER READOUT PADS ARE BROKEN - ASK TOM
     DATA_EXCLUDE_MASK [8:12, 0:72] = True
     d[DATA_EXCLUDE_MASK] = 0
     s[DATA_EXCLUDE_MASK] = 0
 
+    #contour plot of means of ADC values of TRD - finding baseline of TRD
     plt.pcolor(pads,rows,d[0:12,3:144])
     plt.colorbar(label="$\mu$")
     plt.xlabel('Columns')
@@ -56,6 +60,7 @@ if __name__ == "__main__":
     plt.title("Baseline across the TRD")
     plt.show()
 
+    #contour plot of standard deviations of ADC values of TRD - finding baseline standard deviation of TRD
     plt.pcolor(pads,rows,s[0:12,3:144])
     plt.colorbar(label="$\sigma$")
     plt.xlabel('Columns')
@@ -63,12 +68,14 @@ if __name__ == "__main__":
     plt.title("Noise across the TRD")
     plt.show()
 
+    # plot histogram of frequency of the mean ADC values
     hist, bins = np.histogram(d[0:12,3:144], np.linspace(9, 10.5, 500))
     centres = (bins[1:] + bins[:-1]) / 2
     x = np.linspace(9,10.2,1000)
     u = centres**0.5
     mu, sigma = scipy.stats.norm.fit(d[0:12,3:144])
 
+    #fitted gaussian - not completely necessary but sometimes useful
     popt,pcov = curve_fit(gaus,centres,hist,p0=[100,mu,sigma])
     print("mean 1 =", popt[1], "+/-", pcov[1,1]**0.5)
     print("sigma 1 =", popt[2], "+/-", pcov[2,2]**0.5)
