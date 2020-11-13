@@ -38,6 +38,8 @@ if __name__ == "__main__":
     # ------------------------------------------------------------------------
     scTimeArr = []
 
+    # Channel1 scintillator data file path - uses absolute paths, put in your computer path to the channel 1 data
+    # This will be used to synchronise timestamps 
     for scEv in os.listdir("/Users/nathansonnina/ALICE/ALICE2020/Performance/data{0}/Channel1".format(args.filename)):
         if(scEv != ".DS_Store"):
             scHour = (scEv[9:11])
@@ -55,6 +57,7 @@ if __name__ == "__main__":
 
     # ------------------------------------------------------------------------
     # some default settings
+    # exclude broken pads
     DATA_EXCLUDE_MASK = np.zeros((12, 144, 30), dtype=bool)
     # DATA_EXCLUDE_MASK[4:8,0:72,:] = True
     DATA_EXCLUDE_MASK[8:12,0:72,:] = True
@@ -99,6 +102,7 @@ if __name__ == "__main__":
         trdTimeArr.append(trdTime)
         trdSizeArr.append(sizes)
         
+        # synchronising timestamps and reading into npy file
         if(sizes[0]>500 or sizes[1]>500):
             for i in range(len(scTimeArr)):
                 #print(trdTime)
