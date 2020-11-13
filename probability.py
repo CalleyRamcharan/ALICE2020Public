@@ -4,11 +4,14 @@
 Created on Mon Nov  9 15:32:17 2020
 
 @author: georgiaroussos
+
+For determining the percentage of events that had tracklets
 """
 
 import numpy as np
 
 
+# load synced npy 
 data1=np.load('0783SYNC.npy')
 
 
