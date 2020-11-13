@@ -8,6 +8,8 @@ from scipy.optimize import curve_fit,minimize_scalar
 from scipy import asarray as ar,exp
 from scipy.stats import norm
 
+
+#Function definition to read file into array
 def readFile(fD):
     f = open(fD,'r')
     data = f.read()
@@ -33,6 +35,8 @@ def gaus(x,a,x0,sigma):
 
 ################### Defining Variables
 
+
+#.csv file required generated from AnalysisMessy
 fileChoice = "EventLogSYNCdata0783.csv"
 
 eventID = np.genfromtxt(fileChoice,delimiter=',',skip_header=1,usecols=0)
@@ -53,12 +57,15 @@ n = 902
 ################# Event counter/Comparing time methods
 binNo = 80
 
+# Histogram of time difference data for method one
 counts, edges = np.histogram(timeD1,bins = binNo)
 centres = (edges[1:] + edges[:-1]) / 2
 x = np.linspace(0,60,1000)
 u = centres**0.5
 mu, sigma = scipy.stats.norm.fit(timeD1)
 
+
+# TD1 Gaussian fit
 popt,pcov = curve_fit(gaus,centres,counts,p0=[200,mu,sigma])
 print("mean 1 =", popt[1], "+/-", pcov[1,1]**0.5)
 print("sigma 1 =", popt[2], "+/-", pcov[2,2]**0.5)
@@ -81,11 +88,14 @@ plt.xlabel("Time(ns)")
 plt.xlim(0,55)
 plt.show()
 
+
+# Histogram of time difference data for method two
 counts, edges = np.histogram(timeD2,bins = binNo)
 centres = (edges[1:] + edges[:-1]) / 2
 u = centres**0.5
 mu, sigma = scipy.stats.norm.fit(timeD2)
 
+# TD1 Gaussian fit
 popt,pcov = curve_fit(gaus,centres,counts,p0=[25,mu,sigma])
 print("mean 2 =", popt[1], "+/-", pcov[1,1]**0.5)
 print("sigma 2 =", popt[2], "+/-", pcov[2,2]**0.5)
@@ -114,34 +124,36 @@ plt.hist(timeD2,bins = binNo)
 plt.show()
 
 ################# Integral Histograms
-# binNo = 50
+binNo = 50
 
-# plt.hist(integral1,bins = binNo, log=True)
-# plt.title("Ch 1")
-# plt.ylabel("Counts")
-# plt.xlabel("Integral")
-# plt.xlim(0,8)
-# #plt.ylim(0,200)
-# plt.show()
+#Integral for channel 1 plot
+plt.hist(integral1,bins = binNo, log=True)
+plt.title("Ch 1")
+plt.ylabel("Counts")
+plt.xlabel("Integral")
+plt.xlim(0,8)
+plt.ylim(0,200)
+plt.show()
 
-# plt.hist(integral2,bins = binNo,color="orange", log=True)
-# plt.title("Ch 2")
-# plt.ylabel("Counts")
-# plt.xlabel("Integral")
-# plt.xlim(0,3)
-# #plt.ylim(0,180)
-# plt.show()
+#Integral for channel 2 plot
+plt.hist(integral2,bins = binNo,color="orange", log=True)
+plt.title("Ch 2")
+plt.ylabel("Counts")
+plt.xlabel("Integral")
+plt.xlim(0,3)
+plt.ylim(0,180)
+plt.show()
 
 
-# plt.hist(integral1,bins = binNo,label="Ch 1")
-# plt.hist(integral2,bins = binNo,label="Ch 2")
-# plt.ylabel("Number of datasets")
-# plt.xlabel("Integral")
-# plt.title("Ch 1 and Ch 2")
-# plt.legend()
-# #plt.xlim(0.5,5)
-# #plt.ylim(0,220)
-# plt.show()
+plt.hist(integral1,bins = binNo,label="Ch 1")
+plt.hist(integral2,bins = binNo,label="Ch 2")
+plt.ylabel("Number of datasets")
+plt.xlabel("Integral")
+plt.title("Ch 1 and Ch 2")
+plt.legend()
+plt.xlim(0.5,5)
+plt.ylim(0,220)
+plt.show()
 
 
 
