@@ -17,6 +17,7 @@ if args.printargs:
 
 # ------------------------------------------------------------------------
 
+#Uses absolute paths to write organise files into different directories - change paths accordingly.
 os.system("mkdir /Users/nathansonnina/ALICE/ALICE2020/Performance/{0}/Channel1".format(args.folder))
 os.system("mkdir /Users/nathansonnina/ALICE/ALICE2020/Performance/{0}/Channel2".format(args.folder))
 os.system("mkdir /Users/nathansonnina/ALICE/ALICE2020/Performance/{0}/Channel3".format(args.folder))
